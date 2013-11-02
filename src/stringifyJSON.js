@@ -29,8 +29,22 @@ var stringifyJSON = function (obj) {
       }
     //Object
     } else {
-      //TO BE CONTINUED
-    
+      console.log("We have an object!");
+      console.log(obj);
+      if (obj === null) {
+        return 'null';
+      } else if (Object.keys(obj).length === 0) {
+        return '{}';
+      } else {
+        var result = '{';
+        for (var prop in obj) {
+          if (result != '{') {
+            result += ',';
+          }
+          result += stringifyJSON(prop) + ':' + stringifyJSON(obj[prop]);
+        }
+        return result + '}';
+      }
     }
   //No String
   } else if (typeof obj != 'string') {
