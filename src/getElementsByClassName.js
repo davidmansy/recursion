@@ -1,29 +1,25 @@
 // If life was easy, we could just do things the easy way:
-//var getElementsByClassName = function (className) {
-//  return document.getElementsByClassName(className);
-//};
+// var getElementsByClassName = function (className) {
+//   return document.getElementsByClassName(className);
+// };
 
 // But in stead we're going to implement it from scratch:
 var getElementsByClassName = function (className) {
   // your code here
   var result = [];
 
-  var parseElements = function (children) {
-
-	  for (var i = 0; i < children.length; i++) {
-	  	var childClasses = children[i].classList;
-	  	if (childClasses && childClasses.contains(className)) {
-	  		result.push(children[i]);
-	  	}
-	  	if (children[i].hasChildNodes()) {
-	  		parseElements(children[i].childNodes);
-	  	}
-	  }
+  var getElements = function(element) {
+  	var elementClasses = element.classList;
+	if(elementClasses && elementClasses.contains(className)) {
+		result.push(element);
+	}
+  	if (element.hasChildNodes()) {
+  		_.each(element.childNodes, function(child) {
+  			getElements(child);
+  		});
+  	}
   }
-
-  if (document.body.hasChildNodes()) {
-  	parseElements(document.body.childNodes);
-  }
+  getElements(document.body)
 
   return result;
 };
